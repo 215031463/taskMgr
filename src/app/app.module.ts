@@ -10,6 +10,8 @@ import { AppComponent } from './app.component';
 
 import { LoginModule } from './login/login.module';
 
+import { ProjectModule } from './project/project.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -21,6 +23,7 @@ import { LoginModule } from './login/login.module';
     MdSidenavModule,
     CoreModule,
     LoginModule,
+    ProjectModule,
     AppRoutingModule
   ],
   providers: [],

@@ -1,0 +1,8 @@
+<app-project-item
+  [project]="project"
+  *ngFor="let project of projects"
+  class="card"></app-project-item>
+
+<button md-fab type="button" class="fab-btn" (click)="openNewProjectDialog()">
+  <md-icon>add</md-icon>
+</button>

@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  .card {
+    margin: 10px;
+    flex: 0 1 360px;
+    min-height: 360px;
+  }
+  .fab-btn {
+    position: fixed;
+    right: 32px;
+    bottom: 96px;
+    z-index: 998;
+  }
+}
