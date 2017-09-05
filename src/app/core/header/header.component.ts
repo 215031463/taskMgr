@@ -7,16 +7,24 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Output()
-  toggleSidebar: EventEmitter<void> = new EventEmitter<void>();
+  toggleSidebarRequest: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  toggleThemeRequest: EventEmitter<boolean>  = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  public toggleSidebarRequest(): void
+  public toggleSidebar(): void
   {
-    this.toggleSidebar.emit();
+    this.toggleSidebarRequest.emit();
+  }
+
+  public toggleTheme(event: boolean): void
+  {
+    this.toggleThemeRequest.emit(event);
   }
 
 }

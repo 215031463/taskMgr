@@ -1,10 +1,12 @@
-<md-sidenav-container>
+<md-sidenav-container [class.my-dark-theme]="dark">
   <md-sidenav #sidenav mode="over" opened="false" position="start">
     <app-sidebar></app-sidebar>
   </md-sidenav>
   <div class="site">
     <header>
-      <app-header (toggleSidebar)="sidenav.toggle()"></app-header>
+      <app-header
+        (toggleSidebarRequest)="sidenav.toggle()"
+        (toggleThemeRequest)="toggleTheme($event)"></app-header>
     </header>
     <main>
       <router-outlet></router-outlet>
