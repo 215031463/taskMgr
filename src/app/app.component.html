@@ -1,5 +1,5 @@
 <md-sidenav-container>
-  <md-sidenav #sidenav mode="side" opened="false" position="start">
+  <md-sidenav #sidenav mode="over" opened="false" position="start">
     <app-sidebar></app-sidebar>
   </md-sidenav>
   <div class="site">
@@ -7,6 +7,7 @@
       <app-header (toggleSidebar)="sidenav.toggle()"></app-header>
     </header>
     <main>
+      <router-outlet></router-outlet>
     </main>
     <footer>
       <app-footer></app-footer>

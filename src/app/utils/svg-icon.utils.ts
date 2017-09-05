@@ -2,5 +2,16 @@ import { MdIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export const svgResourceLoad = (ir: MdIconRegistry, ds: DomSanitizer) => {
-  ir.addSvgIcon('favorite', ds.bypassSecurityTrustResourceUrl('assets/favorite.svg'));
+  const imgDir = 'assets/img';
+  const sidebarDir = `${imgDir}/sidebar`;
+  const daysDir = `${imgDir}/days`
+
+  ir.addSvgIcon('projects', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/projects.svg`));
+  ir.addSvgIcon('month', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/month.svg`));
+  ir.addSvgIcon('week', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/week.svg`));
+  ir.addSvgIcon('day', ds.bypassSecurityTrustResourceUrl(`${sidebarDir}/day.svg`));
+
+  for (let i = 0; i < 31; i++) {
+    ir.addSvgIcon(`day${i + 1}`, ds.bypassSecurityTrustResourceUrl(`${daysDir}/day${i + 1}.svg`));
+  }
 }

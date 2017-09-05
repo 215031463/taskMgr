@@ -1,7 +1,7 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/shared.module';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MdToolbarModule, MdIconModule, MdButtonModule, MdIconRegistry } from '@angular/material';
+import { MdIconRegistry } from '@angular/material';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -10,10 +10,7 @@ import { svgResourceLoad } from '../utils/svg-icon.utils';
 
 @NgModule({
   imports: [
-    CommonModule,
-    MdToolbarModule,
-    MdIconModule,
-    MdButtonModule
+    SharedModule
   ],
   declarations: [
     HeaderComponent,
