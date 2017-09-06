@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
+import { MD_DIALOG_DATA, MdDialogRef, OverlayContainer } from '@angular/material';
 
 @Component({
   selector: 'app-new-project',
@@ -9,12 +9,14 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 export class NewProjectComponent implements OnInit {
 
   constructor(
-    private dialogRef: MdDialogRef<any>,
-    @Inject(MD_DIALOG_DATA) private dialogData
+    @Inject(MD_DIALOG_DATA) private dialogData,
+    private oc: OverlayContainer,
+    private dialogRef: MdDialogRef<NewProjectComponent>
   ) { }
 
   ngOnInit() {
     console.log(this.dialogData.msg);
+    this.oc.themeClass = this.dialogData.darkTheme ? 'my-dark-theme' : null;
   }
 
   public newProject(): void

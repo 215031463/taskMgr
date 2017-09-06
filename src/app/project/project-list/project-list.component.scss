@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  flex-wrap: wrap;
   .card {
     margin: 10px;
     flex: 0 1 360px;

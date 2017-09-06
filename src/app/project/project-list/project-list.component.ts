@@ -11,7 +11,7 @@ import { Project } from '@domain/project.model';
 })
 export class ProjectListComponent implements OnInit {
   public projects: Array<Project> = [];
-  private dialogRef: MdDialogRef<any>;
+  private dialogRef: MdDialogRef<NewProjectComponent>;
 
   constructor(private dialog: MdDialog) { }
 
@@ -36,10 +36,14 @@ export class ProjectListComponent implements OnInit {
   }
 
   public openNewProjectDialog(): void {
-    this.dialogRef = this.dialog.open(NewProjectComponent, { data: { msg: 'hello dialog...' } });
+    this.dialogRef = this.dialog.open(NewProjectComponent, { data: { msg: 'hello dialog...', darkTheme: true } });
     this.dialogRef.afterClosed()
       .subscribe(
-      data => console.log(data)
+      data => {
+        if (data) {
+          console.log(data);
+        }
+      }
       );
   }
 

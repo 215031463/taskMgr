@@ -14,6 +14,7 @@ $my-dark-accent: mat-palette($mat-deep-orange);
 $my-dark-danger: mat-palette($mat-red);
 $my-dark-theme: mat-dark-theme($my-dark-primary, $my-dark-accent, $my-dark-danger);
 
-md-sidenav-container.my-dark-theme {
+md-sidenav-container.my-dark-theme,
+.cdk-overlay-container.my-dark-theme {
   @include angular-material-theme($my-dark-theme);
 }
