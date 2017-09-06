@@ -5,6 +5,16 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
+    path: 'project',
+    redirectTo: '/project',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tasklists',
+    redirectTo: '/tasklists',
+    pathMatch: 'full'
+  },
+  {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'

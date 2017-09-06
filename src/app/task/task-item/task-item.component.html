@@ -1,0 +1,11 @@
+<md-list-item class="item-container" [ngClass]="priorityClass">
+  <md-checkbox [checked]="item.completed" class="completion-status"></md-checkbox>
+  <div md-line class="content" [ngClass]="{ 'completed': item.completed }">
+    <span [md-tooltip]="item.desc" [style.font-size.px]="14">{{ item.desc }}</span>
+  </div>
+  <div md-line class="bottom-bar">
+    <span *ngIf="item.dueDate" class="due-date">{{ item.dueDate | date: 'yy-MM-dd' }}</span>
+    <md-icon *ngIf="item.reminder" class="alarm">alarm</md-icon>
+  </div>
+  <md-icon [svgIcon]="avatar" md-list-avatar class="avatar"></md-icon>
+</md-list-item>

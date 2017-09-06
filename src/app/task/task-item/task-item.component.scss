@@ -1,0 +1,40 @@
+md-icon.avatar {
+  overflow: hidden;
+  margin: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  order: 3;
+}
+
+.completion-status {
+  order: -1;
+}
+
+.completed {
+  opacity: .7;
+  color: #d9d9d9;
+  background: #fff;
+  text-decoration: line-through;
+}
+
+.priority-normal {
+  border-left: 3px solid #a6a6a6;
+}
+
+.priority-important {
+  border-left: 3px solid #ffaf38;
+}
+
+.priority-emergency {
+  border-left: 3px solid red;
+}
+
+.due-date {
+  background: #ff4f3e;
+  color: #fff;
+}
+
+.alarm {
+  font-size: 18px;
+}

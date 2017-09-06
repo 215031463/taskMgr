@@ -10,18 +10,17 @@ import {
   MdGridListModule,
   MdSlideToggleModule,
   MdDialogModule,
+  MdAutocompleteModule,
+  MdMenuModule,
+  MdCheckboxModule,
+  MdTooltipModule,
+  MdRadioModule,
+  MdDatepickerModule,
+  MdNativeDateModule,
 } from '@angular/material';
 
 @NgModule({
-  imports: [
-    // CommonModule,
-    // MdToolbarModule,
-    // MdIconModule,
-    // MdButtonModule,
-    // MdCardModule,
-    // MdInputModule,
-    // MdSlideToggleModule
-  ],
+  imports: [],
   declarations: [],
   exports: [
     CommonModule,
@@ -33,7 +32,14 @@ import {
     MdListModule,
     MdGridListModule,
     MdSlideToggleModule,
-    MdDialogModule
+    MdDialogModule,
+    MdAutocompleteModule,
+    MdMenuModule,
+    MdCheckboxModule,
+    MdTooltipModule,
+    MdRadioModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
   ]
 })
 export class SharedModule {

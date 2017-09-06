@@ -1,4 +1,5 @@
 <app-project-item
+  (inviteRequest)="invite($event)"
   [project]="project"
   *ngFor="let project of projects"
   class="card"></app-project-item>
