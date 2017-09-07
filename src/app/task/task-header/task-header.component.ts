@@ -9,6 +9,7 @@ export class TaskHeaderComponent implements OnInit {
   @Input() listId: number;
   @Input() headerName = '';
   @Output() newTask: EventEmitter<number> = new EventEmitter<number>();
+  @Output() copyTask: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 
@@ -19,6 +20,12 @@ export class TaskHeaderComponent implements OnInit {
   {
     let id = this.listId ? +this.listId : 1;
     this.newTask.emit(id);
+  }
+
+  public onCopyTaskClick(): void
+  {
+    // console.log('++++++++++++++', 'in task-header');
+    this.copyTask.emit(this.listId);
   }
 
 }

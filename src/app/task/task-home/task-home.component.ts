@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { NewTaskComponent } from '../new-task/new-task.component';
+import { CopyTaskComponent } from './../copy-task/copy-task.component';
 
 @Component({
   selector: 'app-task-home',
@@ -96,14 +97,14 @@ export class TaskHomeComponent implements OnInit {
   ];
 
   private newTaskDialogRef: MdDialogRef<NewTaskComponent>;
+  private copyTaskDialogRef: MdDialogRef<CopyTaskComponent>;
 
   constructor(private dialog: MdDialog) { }
 
   ngOnInit() {
   }
 
-  public openNewTaskDialog(id: number | string): void
-  {
+  public openNewTaskDialog(id: number | string): void {
     this.newTaskDialogRef = this.dialog.open(NewTaskComponent, {
       data: {
         id: +id
@@ -112,12 +113,27 @@ export class TaskHomeComponent implements OnInit {
     this.responseNewTaskDialog();
   }
 
-  public responseNewTaskDialog(): void
-  {
+  public responseNewTaskDialog(): void {
     this.newTaskDialogRef.afterClosed()
       .subscribe(data => {
         console.log(data);
       });
+  }
+
+  public openCopyTaskDialog(): void {
+    // console.log('=================', 'in task-home');
+    const dialogRef = this.dialog.open(CopyTaskComponent, {
+      data: {
+        lists: this.lists
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(
+      data => {
+        console.log(data);
+      }
+      );
   }
 
 }

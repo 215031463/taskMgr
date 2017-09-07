@@ -4,6 +4,7 @@
     class="task-list-container">
     <app-task-header
       (newTask)="openNewTaskDialog($event)"
+      (copyTask)="openCopyTaskDialog($event)"
       [listId]="list.id"
       [headerName]="list.name"></app-task-header>
     <app-task-item

@@ -17,6 +17,7 @@ import {
   MdRadioModule,
   MdDatepickerModule,
   MdNativeDateModule,
+  MdSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -40,6 +41,7 @@ import {
     MdRadioModule,
     MdDatepickerModule,
     MdNativeDateModule,
+    MdSelectModule
   ]
 })
 export class SharedModule {
