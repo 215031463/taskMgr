@@ -7,6 +7,7 @@ import { MD_DIALOG_DATA, MdDialogRef, OverlayContainer } from '@angular/material
   styleUrls: ['./new-project.component.scss']
 })
 export class NewProjectComponent implements OnInit {
+  public title: string;
 
   constructor(
     @Inject(MD_DIALOG_DATA) private dialogData,
@@ -14,7 +15,10 @@ export class NewProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.dialogData.msg);
+    this.title = this.dialogData.title;
+    if (this.dialogData.project) {
+      console.log(this.dialogData.project);
+    }
   }
 
   public newProject(): void

@@ -1,3 +1,4 @@
+import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
@@ -12,9 +13,8 @@ import { Project } from '@domain/project.model';
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
+  public waitingDeleteProjectId: number;
   public projects: Array<Project> = [];
-  private NewProjectDialogRef: MdDialogRef<NewProjectComponent>;
-  private InviteDialogRef: MdDialogRef<InviteComponent>;
 
   constructor(private dialog: MdDialog) { }
 
@@ -42,8 +42,13 @@ export class ProjectListComponent implements OnInit {
   }
 
   public openNewProjectDialog(): void {
-    this.NewProjectDialogRef = this.dialog.open(NewProjectComponent, { data: { msg: 'hello dialog...', darkTheme: true } });
-    this.NewProjectDialogRef.afterClosed()
+    const dialogRef: MdDialogRef<NewProjectComponent> = this.dialog.open(NewProjectComponent, {
+      data: {
+        title: '新建项目',
+        darkTheme: true
+      }
+    });
+    dialogRef.afterClosed()
       .subscribe(
       data => {
         if (data) {
@@ -55,11 +60,53 @@ export class ProjectListComponent implements OnInit {
 
   public invite(id?: number): void
   {
-    this.InviteDialogRef = this.dialog.open(InviteComponent, { data: { darkTheme: true, id: id } });
-    this.InviteDialogRef.afterClosed()
+    const dialogRef: MdDialogRef<InviteComponent> = this.dialog.open(InviteComponent, {
+      data: {
+        darkTheme: true,
+        id: id
+      }
+    });
+    dialogRef.afterClosed()
       .subscribe(
       data => {
         // console.log(JSON.stringify(data));
+      }
+      );
+  }
+
+  public editRequestHandler(project): void
+  {
+    this.dialog.open(NewProjectComponent, {
+      data: {
+        title: '修改',
+        project: project
+      }
+    });
+  }
+
+  public deleteRequestHandler(project): void
+  {
+    this.waitingDeleteProjectId = project.id;
+    const dialogRef: MdDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, {
+      position: {
+        top: '30px'
+      },
+      data: {
+        title: '删除确认',
+        content: `您确定删除 项目 ${project.name} 吗？`
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(
+      data => {
+        if (data) {
+          this.projects.forEach((project, index, projects) => {
+            if (project.id === this.waitingDeleteProjectId) {
+              projects.splice(index, 1);
+            }
+          });
+        }
       }
       );
   }

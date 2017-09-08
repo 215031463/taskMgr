@@ -8,6 +8,7 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 })
 export class NewTaskComponent implements OnInit {
   public priorities: Array<any>;
+  public title: string;
 
   constructor(
     private dialogRef: MdDialogRef<NewTaskComponent>,
@@ -15,7 +16,12 @@ export class NewTaskComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.title = this.dialogData.title;
+
     this.initialPriorities();
+    if (this.dialogData.task) {
+      console.log(this.dialogData.task);
+    }
   }
 
   private initialPriorities(): void

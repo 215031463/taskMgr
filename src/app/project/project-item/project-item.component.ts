@@ -10,6 +10,8 @@ import { Project } from '@domain/project.model';
 export class ProjectItemComponent implements OnInit {
   @Input() project: Project;
   @Output() inviteRequest: EventEmitter<number> = new EventEmitter<number>();
+  @Output() editRequest: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deleteRequest: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() { }
 
@@ -19,6 +21,16 @@ export class ProjectItemComponent implements OnInit {
   public inviteClick(): void
   {
     this.inviteRequest.emit(this.project.id);
+  }
+
+  public onEditBtnClick(): void
+  {
+    this.editRequest.emit();
+  }
+
+  public onDeleteBtnClick(): void
+  {
+    this.deleteRequest.emit();
   }
 
 }

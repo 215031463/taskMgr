@@ -5,14 +5,17 @@
     <app-task-header
       (newTask)="openNewTaskDialog($event)"
       (copyTask)="openCopyTaskDialog($event)"
+      (editTaskListRequest)="editTaskListHandler(list)"
+      (deleteTaskListRequest)="deleteTaskListHandler(list)"
       [listId]="list.id"
       [headerName]="list.name"></app-task-header>
     <app-task-item
       [item]="task"
+      (click)="onItemClick(task)"
       *ngFor="let task of list.tasks"></app-task-item>
   </app-task-list>
 </div>
 
-<button md-fab type="button" class="fab-btn">
+<button (click)="onNewTaskListClick()" md-fab type="button" class="fab-btn">
   <md-icon>add</md-icon>
 </button>

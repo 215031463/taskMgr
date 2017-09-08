@@ -10,6 +10,8 @@ export class TaskHeaderComponent implements OnInit {
   @Input() headerName = '';
   @Output() newTask: EventEmitter<number> = new EventEmitter<number>();
   @Output() copyTask: EventEmitter<number> = new EventEmitter<number>();
+  @Output() editTaskListRequest: EventEmitter<void> = new EventEmitter<void>();
+  @Output() deleteTaskListRequest: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() { }
 
@@ -26,6 +28,16 @@ export class TaskHeaderComponent implements OnInit {
   {
     // console.log('++++++++++++++', 'in task-header');
     this.copyTask.emit(this.listId);
+  }
+
+  public onEditTaskListClick(): void
+  {
+    this.editTaskListRequest.emit();
+  }
+
+  public onDeleteTaskListClick(): void
+  {
+    this.deleteTaskListRequest.emit();
   }
 
 }

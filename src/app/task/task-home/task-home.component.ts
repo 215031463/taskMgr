@@ -3,6 +3,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { NewTaskComponent } from '../new-task/new-task.component';
 import { CopyTaskComponent } from './../copy-task/copy-task.component';
+import { NewTaskListComponent } from './../new-task-list/new-task-list.component';
+import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-task-home',
@@ -10,6 +12,7 @@ import { CopyTaskComponent } from './../copy-task/copy-task.component';
   styleUrls: ['./task-home.component.scss']
 })
 export class TaskHomeComponent implements OnInit {
+  private waitingDeleteListId: number;
   public lists = [
     {
       id: 1,
@@ -96,33 +99,28 @@ export class TaskHomeComponent implements OnInit {
     }
   ];
 
-  private newTaskDialogRef: MdDialogRef<NewTaskComponent>;
-  private copyTaskDialogRef: MdDialogRef<CopyTaskComponent>;
-
   constructor(private dialog: MdDialog) { }
 
   ngOnInit() {
   }
 
   public openNewTaskDialog(id: number | string): void {
-    this.newTaskDialogRef = this.dialog.open(NewTaskComponent, {
+    const dialogRef: MdDialogRef<NewTaskComponent> = this.dialog.open(NewTaskComponent, {
       data: {
+        title: '新建任务',
         id: +id
       }
     });
-    this.responseNewTaskDialog();
-  }
 
-  public responseNewTaskDialog(): void {
-    this.newTaskDialogRef.afterClosed()
-      .subscribe(data => {
-        console.log(data);
-      });
+    dialogRef.afterClosed()
+      .subscribe(
+      data => console.log(data)
+      );
   }
 
   public openCopyTaskDialog(): void {
     // console.log('=================', 'in task-home');
-    const dialogRef = this.dialog.open(CopyTaskComponent, {
+    const dialogRef: MdDialogRef<CopyTaskComponent> = this.dialog.open(CopyTaskComponent, {
       data: {
         lists: this.lists
       }
@@ -134,6 +132,67 @@ export class TaskHomeComponent implements OnInit {
         console.log(data);
       }
       );
+  }
+
+  public onItemClick(task): void
+  {
+    const dialogRef: MdDialogRef<NewTaskComponent> = this.dialog.open(NewTaskComponent, {
+      data: {
+        title: '修改任务',
+        task: task
+      }
+    });
+  }
+
+  public onNewTaskListClick(): void
+  {
+    const dialogRef = this.dialog.open(NewTaskListComponent, {
+      data: {
+        title: '新建列表'
+      }
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        console.log(data);
+      });
+  }
+
+  public editTaskListHandler(list): void
+  {
+    const dialogRef = this.dialog.open(NewTaskListComponent, {
+      data: {
+        title: '修改列表',
+        list: list
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(
+      data => {
+        console.log(data);
+      }
+      );
+  }
+
+  public deleteTaskListHandler(list): void
+  {
+    this.waitingDeleteListId = list.id;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: '删除确认',
+        content: '确认删除该任务列表吗？'
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe(data => {
+        if (data) {
+          this.lists.forEach((list, index, lists) => {
+            if (list.id === this.waitingDeleteListId) {
+              this.lists.splice(index, 1);
+            }
+          });
+        }
+      });
   }
 
 }
