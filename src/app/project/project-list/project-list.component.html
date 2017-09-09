@@ -1,10 +1,12 @@
-<app-project-item
+<div class="container" [@list]="projects.length">
+  <app-project-item
   [project]="project"
   (inviteRequest)="invite($event)"
   (editRequest)="editRequestHandler(project)"
   (deleteRequest)="deleteRequestHandler(project)"
   *ngFor="let project of projects"
   class="card"></app-project-item>
+</div>
 
 <button md-fab type="button" class="fab-btn" (click)="openNewProjectDialog()">
   <md-icon>add</md-icon>

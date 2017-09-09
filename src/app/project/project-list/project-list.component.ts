@@ -1,20 +1,25 @@
-import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { NewProjectComponent } from '../new-project/new-project.component';
 import { InviteComponent } from '../invite/invite.component';
+import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
 
+import { routeAnim } from '@animations/route.animations';
+import { listAnim } from '@animations/list.animations';
 import { Project } from '@domain/project.model';
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  styleUrls: ['./project-list.component.scss'],
+  animations: [ routeAnim, listAnim ]
 })
 export class ProjectListComponent implements OnInit {
   public waitingDeleteProjectId: number;
   public projects: Array<Project> = [];
+
+  @HostBinding('@slideToRight') state;
 
   constructor(private dialog: MdDialog) { }
 
@@ -36,7 +41,13 @@ export class ProjectListComponent implements OnInit {
         id: 3,
         name: '项目三',
         desc: '项目三的描述内容',
-        imgURL: './assets/img/covers/2.jpg'
+        imgURL: './assets/img/covers/3.jpg'
+      },
+      {
+        id: 4,
+        name: '项目四',
+        desc: '项目四的描述内容',
+        imgURL: './assets/img/covers/4.jpg'
       }
     ];
   }
@@ -44,15 +55,27 @@ export class ProjectListComponent implements OnInit {
   public openNewProjectDialog(): void {
     const dialogRef: MdDialogRef<NewProjectComponent> = this.dialog.open(NewProjectComponent, {
       data: {
-        title: '新建项目',
-        darkTheme: true
+        title: '新建项目'
       }
     });
     dialogRef.afterClosed()
       .subscribe(
       data => {
         if (data) {
-          console.log(data);
+          this.projects = [...this.projects,
+          {
+            id: 5,
+            name: '项目五',
+            desc: '项目五的描述内容',
+            imgURL: './assets/img/covers/5.jpg'
+          },
+          {
+            id: 6,
+            name: '项目六',
+            desc: '项目六的描述内容',
+            imgURL: './assets/img/covers/6.jpg'
+          }
+        ]
         }
       }
       );

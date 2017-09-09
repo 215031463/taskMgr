@@ -5,7 +5,8 @@
     "module": "es2015",
     "baseUrl": "",
     "paths": {
-      "@domain/*": ["app/domain/*"]
+      "@domain/*": ["app/domain/*"],
+      "@animations/*": ["app/animations/*"]
     },
     "types": []
   },

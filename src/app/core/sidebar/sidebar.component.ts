@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,12 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  @Output() sideNavClick: EventEmitter<void> = new EventEmitter<void>();
   public day: string;
 
   constructor() { }
 
   ngOnInit() {
     this.day = `day${new Date().getDate()}`;
+  }
+
+  public onNavClick(): void
+  {
+    this.sideNavClick.emit();
   }
 
 }

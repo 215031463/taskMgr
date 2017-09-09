@@ -16,4 +16,5 @@ export class AppComponent {
     this.dark = event;
     this.oc.themeClass = this.dark ? 'my-dark-theme' : null;
   }
+
 }
