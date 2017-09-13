@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { NewProjectComponent } from '../new-project/new-project.component';
@@ -13,7 +13,8 @@ import { Project } from '@domain/project.model';
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  animations: [ routeAnim, listAnim ]
+  animations: [ routeAnim, listAnim ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectListComponent implements OnInit {
   public waitingDeleteProjectId: number;
@@ -21,7 +22,7 @@ export class ProjectListComponent implements OnInit {
 
   @HostBinding('@slideToRight') state;
 
-  constructor(private dialog: MdDialog) { }
+  constructor(private dialog: MdDialog, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.projects = [
@@ -37,7 +38,7 @@ export class ProjectListComponent implements OnInit {
         desc: '项目二的描述内容',
         imgURL: './assets/img/covers/1.jpg'
       },
-      {
+      /* {
         id: 3,
         name: '项目三',
         desc: '项目三的描述内容',
@@ -48,7 +49,7 @@ export class ProjectListComponent implements OnInit {
         name: '项目四',
         desc: '项目四的描述内容',
         imgURL: './assets/img/covers/4.jpg'
-      }
+      } */
     ];
   }
 
@@ -75,7 +76,8 @@ export class ProjectListComponent implements OnInit {
             desc: '项目六的描述内容',
             imgURL: './assets/img/covers/6.jpg'
           }
-        ]
+        ];
+        this.cd.markForCheck();
         }
       }
       );
@@ -130,6 +132,7 @@ export class ProjectListComponent implements OnInit {
             }
           });
         }
+        this.cd.markForCheck();
       }
       );
   }

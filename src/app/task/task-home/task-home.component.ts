@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { NewTaskComponent } from '../new-task/new-task.component';
@@ -11,7 +11,8 @@ import { routeAnim } from '@animations/route.animations';
   selector: 'app-task-home',
   templateUrl: './task-home.component.html',
   styleUrls: ['./task-home.component.scss'],
-  animations: [ routeAnim ]
+  animations: [ routeAnim ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TaskHomeComponent implements OnInit {
   private waitingDeleteListId: number;
@@ -103,7 +104,7 @@ export class TaskHomeComponent implements OnInit {
 
   @HostBinding('@slideToRight') state;
 
-  constructor(private dialog: MdDialog) { }
+  constructor(private dialog: MdDialog, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
@@ -158,7 +159,17 @@ export class TaskHomeComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(data => {
-        console.log(data);
+        if (data) {
+          this.lists = [
+            ...this.lists,
+            {
+              id: 7,
+              name: data,
+              tasks: []
+            }
+          ];
+        }
+        this.cd.markForCheck();
       });
   }
 
@@ -196,6 +207,7 @@ export class TaskHomeComponent implements OnInit {
             }
           });
         }
+        this.cd.markForCheck();
       });
   }
 

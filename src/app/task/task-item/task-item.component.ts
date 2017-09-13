@@ -26,8 +26,6 @@ export class TaskItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.item.completed);
-    console.log(this.item.owner.avatar);
   }
 
   public get avatar(): string

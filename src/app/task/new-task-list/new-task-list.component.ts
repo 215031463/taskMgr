@@ -1,10 +1,11 @@
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
-import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-new-task-list',
   templateUrl: './new-task-list.component.html',
-  styleUrls: ['./new-task-list.component.scss']
+  styleUrls: ['./new-task-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewTaskListComponent implements OnInit {
   public title: string;
@@ -20,7 +21,8 @@ export class NewTaskListComponent implements OnInit {
 
   public onSaveClick(): void
   {
-    this.dialogRef.close();
+    const name = '乱取的'
+    this.dialogRef.close(name);
   }
 
 }
