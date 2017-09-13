@@ -5,6 +5,7 @@ import { NewTaskComponent } from '../new-task/new-task.component';
 import { CopyTaskComponent } from './../copy-task/copy-task.component';
 import { NewTaskListComponent } from './../new-task-list/new-task-list.component';
 import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-dialog.component';
+import { DragData } from './../../directive/drag-drop.service';
 import { routeAnim } from '@animations/route.animations';
 
 @Component({
@@ -20,6 +21,7 @@ export class TaskHomeComponent implements OnInit {
     {
       id: 1,
       name: '待办',
+      order: 2,
       tasks: [
         {
           id: 1,
@@ -52,6 +54,7 @@ export class TaskHomeComponent implements OnInit {
     {
       id: 2,
       name: '进行中',
+      order: 1,
       tasks: [
         {
           id: 1,
@@ -84,6 +87,7 @@ export class TaskHomeComponent implements OnInit {
     {
       id: 3,
       name: '已完成',
+      order: 3,
       tasks: [
         {
           id: 1,
@@ -160,10 +164,15 @@ export class TaskHomeComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(data => {
         if (data) {
+          // let maxOrders = this.lists.map(list => list.order),
+          //     maxOrder = Math.max(...maxOrders);
+          let maxOrder: any = this.lists.map(list => list.order);
+          maxOrder = Math.max(...maxOrder);
           this.lists = [
             ...this.lists,
             {
               id: 7,
+              order: maxOrder + 1,
               name: data,
               tasks: []
             }
@@ -209,6 +218,22 @@ export class TaskHomeComponent implements OnInit {
         }
         this.cd.markForCheck();
       });
+  }
+
+  // 处理拖拽事件
+  public onDroppedHandler(dragData: DragData, list): void
+  {
+    switch (dragData.tag) {
+      case 'task-item':
+        console.log('handling item');
+        break;
+      case 'task-list':
+        console.log('handling list');
+        dragData.data.order = [list.order, list.order = dragData.data.order][0];
+        break;
+      default:
+        break;
+    }
   }
 
 }

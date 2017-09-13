@@ -1,5 +1,6 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MdSidenavModule } from '@angular/material';
@@ -14,6 +15,7 @@ import 'hammerjs';
 
 @NgModule({
   imports: [
+    HttpModule,
     SharedModule,
     AppRoutingModule
   ],
@@ -28,7 +30,8 @@ import 'hammerjs';
     SidebarComponent,
     MdSidenavModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpModule
   ]
 })
 export class CoreModule {

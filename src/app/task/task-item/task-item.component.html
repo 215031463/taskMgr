@@ -1,4 +1,11 @@
-<md-list-item class="item-container" [@item]="widthState" [ngClass]="priorityClass" [style.cursor]="'pointer'">
+<md-list-item class="item-container"
+  [@item]="widthState"
+  [appDraggable]="true"
+  [dragTag]="'task-item'"
+  [dragData]="item"
+  [dragStartClass]="'drag-start'"
+  [ngClass]="priorityClass"
+  [style.cursor]="'pointer'">
   <md-checkbox (click)="onCheckboxClick($event)" [checked]="item.completed" class="completion-status"></md-checkbox>
   <div md-line class="content" [ngClass]="{ 'completed': item.completed }">
     <span [md-tooltip]="item.desc" [style.font-size.px]="14">{{ item.desc }}</span>
