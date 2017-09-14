@@ -18,6 +18,7 @@
       (deleteTaskListRequest)="deleteTaskListHandler(list)"
       [listId]="list.id"
       [headerName]="list.name"></app-task-header>
+    <app-quick-task (quickTaskRequest)="quickTaskHandler($event)"></app-quick-task>
     <app-task-item
       [item]="task"
       (click)="onItemClick(task)"

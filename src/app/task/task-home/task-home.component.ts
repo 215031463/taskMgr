@@ -220,6 +220,11 @@ export class TaskHomeComponent implements OnInit {
       });
   }
 
+  public quickTaskHandler(desc: string): void
+  {
+    console.log(desc);
+  }
+
   // 处理拖拽事件
   public onDroppedHandler(dragData: DragData, list): void
   {
