@@ -22,15 +22,20 @@ import {
   MdSelectModule
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { DirectiveModule } from './../directive/directive.module';
+import { DirectiveModule } from '../directive/directive.module';
+import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 
 @NgModule({
   imports: [
+    CommonModule,
     MdButtonModule,
-    MdDialogModule
+    MdDialogModule,
+    MdGridListModule,
+    MdIconModule
   ],
   declarations: [
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ImageListSelectComponent
   ],
   entryComponents: [
     ConfirmDialogComponent
@@ -55,8 +60,9 @@ import { DirectiveModule } from './../directive/directive.module';
     MdDatepickerModule,
     MdNativeDateModule,
     MdSelectModule,
+    DirectiveModule,
     ConfirmDialogComponent,
-    DirectiveModule
+    ImageListSelectComponent
   ]
 })
 export class SharedModule {

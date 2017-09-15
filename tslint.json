@@ -12,7 +12,7 @@
     ],
     "curly": true,
     "eofline": true,
-    "forin": true,
+    "forin": false,
     "import-blacklist": [
       true,
       "rxjs"
@@ -45,7 +45,7 @@
       "trace"
     ],
     "no-construct": true,
-    "no-debugger": true,
+    "no-debugger": false,
     "no-duplicate-super": true,
     "no-empty": false,
     "no-empty-interface": true,
