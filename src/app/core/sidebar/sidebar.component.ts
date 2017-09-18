@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.day = `day${new Date().getDate()}`;
+    console.log(this.day);
   }
 
   public onNavClick(): void
