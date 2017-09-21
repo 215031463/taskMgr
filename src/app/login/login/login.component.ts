@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { QuoteService } from '../../service/quote/quote.service';
+import { Quote } from '../../domain/quote.model';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,6 +11,11 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 })
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
+  public quote: Quote = {
+    'cn': '知识改变命运，英语成就未来！',
+    'en': 'Knowlegde can change your fate and English can accomplish your future.',
+    'pic': '/assets/img/quotes/3.jpg'
+  };
 
   public formErrors = {
     'email': '',
@@ -26,9 +34,12 @@ export class LoginComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private qs: QuoteService) { }
 
   ngOnInit() {
+    this.loadQuote();
     this.buildForm();
   }
 
@@ -72,6 +83,14 @@ export class LoginComponent implements OnInit {
         }
       }
     }
+  }
+
+  public loadQuote(): void
+  {
+    this.qs.getQuote()
+      .subscribe((q: Quote) => {
+        this.quote = q;
+      });
   }
 
 }

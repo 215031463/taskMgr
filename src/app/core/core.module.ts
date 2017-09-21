@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { ServiceModule } from '../service/service.module';
+
 import { MdSidenavModule } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
@@ -31,7 +33,16 @@ import 'hammerjs';
     MdSidenavModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpModule
+    HttpModule,
+    ServiceModule
+  ],
+  providers: [
+    {
+      provide: 'APP_CONFIG',
+      useValue: {
+        url: 'http://localhost:3000'
+      }
+     }
   ]
 })
 export class CoreModule {

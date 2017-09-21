@@ -1,0 +1,64 @@
+{
+  "quotes": [
+    {
+      "id": 0,
+      "cn": "对明天做好的准备就是今天做到最好！",
+      "en": "The best preparation for tomorrow is doing your best today.",
+      "pic": "/assets/img/quotes/0.jpg"
+    },
+    {
+      "id": 1,
+      "cn": "改变了自己的思想就改变了自己的环境！",
+      "en": "Change your thoughts and you change your world.",
+      "pic": "/assets/img/quotes/1.jpg"
+    },
+    {
+      "id": 2,
+      "cn": "如果你想要成功，不要去追求成功；尽管做你自己热爱的事情并且相信它，成功自然到来！",
+      "en": "Don't aim for success if you want it; just do what you love and believe in, and it will come naturally.",
+      "pic": "/assets/img/quotes/2.jpg"
+    },
+    {
+      "id": 3,
+      "cn": "知识改变命运，英语成就未来！",
+      "en": "Knowlegde can change your fate and English can accomplish your future.",
+      "pic": "/assets/img/quotes/3.jpg"
+    },
+    {
+      "id": 4,
+      "cn": "一次只做一件事，做到最好！",
+      "en": "Do one thing at a time, and do well.",
+      "pic": "/assets/img/quotes/4.jpg"
+    },
+    {
+      "id": 5,
+      "cn": "不能充分掌握时间与区别事情的缓急先后，你的一切都会打折扣。",
+      "en": "If you are not in good control of time or cannot set prioritiesfor different matters,what you do is surely to be rebated.",
+      "pic": "/assets/img/quotes/5.jpg"
+    },
+    {
+      "id": 6,
+      "cn": "不要魂不守舍，不要匆忙行事。",
+      "en": "Do not be restless;do not be hasty.",
+      "pic": "/assets/img/quotes/6.jpg"
+    },
+    {
+      "id": 7,
+      "cn": "良好的开端是成功的一半。",
+      "en": "A good beginning is half done.",
+      "pic": "/assets/img/quotes/7.jpg"
+    },
+    {
+      "id": 8,
+      "cn": "戏谑不能化敌为友，只能使人失去朋友。",
+      "en": "A joke never gains an enemy but loses a friend.",
+      "pic": "/assets/img/quotes/8.jpg"
+    },
+    {
+      "id": 9,
+      "cn": "光说空话不做事，犹如花园光长刺。",
+      "en": "A man of words and not of deeds is like a garden full of weeds. ",
+      "pic": "/assets/img/quotes/9.jpg"
+    }
+  ]
+}

@@ -22,11 +22,11 @@
   <md-card>
     <md-card-header>
       <md-card-title>每日佳句</md-card-title>
-      <md-card-subtitle>满足感在于不断地努力，而不是现有成就，全心努力定会胜利满满</md-card-subtitle>
+      <md-card-subtitle>{{ quote.cn }}</md-card-subtitle>
     </md-card-header>
-    <img md-card-image src="assets/img/quotes/6.jpg" alt="配图">
+  <img md-card-image [src]="quote.pic" alt="配图">
     <md-card-content>
-      Satisfaction lies in the effort, not in the attainment. Full effort is full victory
+      {{ quote.en }}
     </md-card-content>
   </md-card>
 </form>
