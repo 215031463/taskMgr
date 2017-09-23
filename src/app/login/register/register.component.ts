@@ -41,6 +41,16 @@ export class RegisterComponent implements OnInit {
     }
   };
 
+  public get passwordLength (): boolean
+  {
+    return this.formErrors.password.length <= 0
+  }
+
+  public get confirmPassword(): boolean
+  {
+    return this.formErrors.confirmPassword.length <= 0;
+  }
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {

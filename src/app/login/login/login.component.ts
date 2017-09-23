@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
+import 'rxjs/add/operator/do';
 import { QuoteService } from '../../service/quote/quote.service';
 import { Quote } from '../../domain/quote.model';
 
@@ -88,6 +89,7 @@ export class LoginComponent implements OnInit {
   public loadQuote(): void
   {
     this.qs.getQuote()
+      .debug('quote >> ')
       .subscribe((q: Quote) => {
         this.quote = q;
       });

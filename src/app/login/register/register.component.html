@@ -15,12 +15,12 @@
       <md-input-container color="primary" floatPlaceholder="float" class="full-width">
         <input formControlName="password" mdInput type="password" placeholder="您的密码">
         <md-hint>必填项</md-hint>
-        <md-error [hidden]="formErrors.password <= 0">{{ formErrors.password[0] }}</md-error>
+        <md-error [hidden]="passwordLength">{{ formErrors.password[0] }}</md-error>
       </md-input-container>
       <md-input-container color="primary" floatPlaceholder="float" class="full-width">
         <input formControlName="confirmPassword" mdInput type="password" placeholder="确认密码">
         <md-hint>必填项</md-hint>
-        <md-error [hidden]="formErrors.confirmPassword <= 0">{{ formErrors.confirmPassword[0] }}</md-error>
+        <md-error [hidden]="confirmPassword">{{ formErrors.confirmPassword[0] }}</md-error>
       </md-input-container>
       <app-image-list-select formControlName="avatar" [title]="'请选择头像'" [items]="items" [useSvgIcon]="true"></app-image-list-select>
       <br>

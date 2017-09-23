@@ -14,6 +14,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { svgResourceLoad } from '../utils/svg-icon.utils';
 import 'hammerjs';
+import '../utils/debug.utils';
 
 @NgModule({
   imports: [
