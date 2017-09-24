@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
     },
     avatar: {
       required: '要选择一个头像'
-    }
+    },
+    dateOfBirth: []
   };
 
   public get passwordLength (): boolean

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   MdToolbarModule,
@@ -19,11 +19,13 @@ import {
   MdRadioModule,
   MdDatepickerModule,
   MdNativeDateModule,
-  MdSelectModule
+  MdSelectModule,
+  MdButtonToggleModule
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
+import { AgeInputComponent } from './age-input/age-input.component';
 
 @NgModule({
   imports: [
@@ -31,11 +33,17 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdButtonModule,
     MdDialogModule,
     MdGridListModule,
-    MdIconModule
+    MdIconModule,
+    MdInputModule,
+    ReactiveFormsModule,
+    MdButtonToggleModule,
+    MdDatepickerModule,
+    MdNativeDateModule
   ],
   declarations: [
     ConfirmDialogComponent,
-    ImageListSelectComponent
+    ImageListSelectComponent,
+    AgeInputComponent,
   ],
   entryComponents: [
     ConfirmDialogComponent
@@ -62,7 +70,8 @@ import { ImageListSelectComponent } from './image-list-select/image-list-select.
     MdSelectModule,
     DirectiveModule,
     ConfirmDialogComponent,
-    ImageListSelectComponent
+    ImageListSelectComponent,
+    AgeInputComponent,
   ]
 })
 export class SharedModule {
