@@ -82,7 +82,8 @@ export class RegisterComponent implements OnInit {
       confirmPassword: ['', Validators.compose([
         equalValidate('password')
       ])],
-      avatar: avatar
+      avatar: avatar,
+      dateOfBirth: '1994-10-4'
     });
 
     // 订阅registerForm的 valueChanges

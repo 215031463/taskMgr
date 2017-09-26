@@ -1,26 +1,28 @@
 <div [formGroup]="form" class="age-input-container">
   <div>
     <md-form-field>
-      <input formControlName="birthday" mdInput [mdDatepicker]="picker" type="text" placeholder="出生日期">
-      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
-      <md-error *ngIf="form.get('birthday').hasError('date')">日期不正确</md-error>
+      <input type="text" formControlName="birthday" mdInput [mdDatepicker]="picker" placeholder="出生日期">
+      <md-datepicker-toggle [for]="picker" mdSuffix=""></md-datepicker-toggle>
+      <md-error></md-error>
     </md-form-field>
-    <md-datepicker #picker></md-datepicker>
+    <md-datepicker touchUi="true" #picker></md-datepicker>
   </div>
+
   <ng-container formGroupName="age">
-    <div class="age-num">
+    <div class="ageNum">
       <md-form-field>
-        <input formControlName="ageNum" mdInput type="number" placeholder="年龄">
-        <md-error></md-error>
+        <input type="number" formControlName="ageNum" mdInput placeholder="年龄">
       </md-form-field>
     </div>
     <div>
       <md-button-toggle-group formControlName="ageUnit">
-        <md-button-toggle [value]="unit.value" *ngFor="let unit of ageUnits">
-          {{ unit.name }}
+        <md-button-toggle
+          [value]="unit.value"
+          *ngFor="let unit of units">
+          {{ unit.label }}
         </md-button-toggle>
       </md-button-toggle-group>
     </div>
-    <md-error *ngIf="form.get('age').hasError('ageInvalid')">年龄或者单位不正确</md-error>
+    <md-error *ngIf="form.hasError('ageInvalid', 'age')">年龄或单位不正确</md-error>
   </ng-container>
 </div>
