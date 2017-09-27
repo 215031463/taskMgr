@@ -1,0 +1,28 @@
+<div [formGroup]="form" class="age-input-container">
+  <div>
+    <md-form-field>
+      <input type="text" formControlName="birthday" mdInput [mdDatepicker]="picker" placeholder="出生日期">
+      <md-datepicker-toggle [for]="picker" mdSuffix=""></md-datepicker-toggle>
+      <md-error></md-error>
+    </md-form-field>
+    <md-datepicker touchUi="true" #picker></md-datepicker>
+  </div>
+
+  <ng-container formGroupName="age">
+    <div class="ageNum">
+      <md-form-field>
+        <input type="number" formControlName="ageNum" mdInput placeholder="年龄">
+      </md-form-field>
+    </div>
+    <div>
+      <md-button-toggle-group formControlName="ageUnit">
+        <md-button-toggle
+          [value]="unit.value"
+          *ngFor="let unit of units">
+          {{ unit.label }}
+        </md-button-toggle>
+      </md-button-toggle-group>
+    </div>
+    <md-error *ngIf="form.hasError('ageInvalid', 'age') && form.get('age').dirty">年龄或单位不正确</md-error>
+  </ng-container>
+</div>

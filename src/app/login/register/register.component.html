@@ -23,6 +23,7 @@
         <md-error [hidden]="confirmPassword">{{ formErrors.confirmPassword[0] }}</md-error>
       </md-input-container>
       <app-image-list-select formControlName="avatar" [title]="'请选择头像'" [items]="items" [useSvgIcon]="true"></app-image-list-select>
+      <app-age-input formControlName="dateOfBirth"></app-age-input>
       <br>
       <button [disabled]="registerForm.invalid" md-raised-button color="primary" type="submit">注册</button>
       <button md-raised-button color="accent" type="reset" (click)="registerForm.reset()">重填</button>

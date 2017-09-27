@@ -38,7 +38,8 @@ export class RegisterComponent implements OnInit {
     },
     avatar: {
       required: '要选择一个头像'
-    }
+    },
+    dateOfBirth: []
   };
 
   public get passwordLength (): boolean
@@ -81,7 +82,8 @@ export class RegisterComponent implements OnInit {
       confirmPassword: ['', Validators.compose([
         equalValidate('password')
       ])],
-      avatar: avatar
+      avatar: avatar,
+      dateOfBirth: '1994-10-04'
     });
 
     // 订阅registerForm的 valueChanges
