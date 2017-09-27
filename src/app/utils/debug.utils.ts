@@ -12,7 +12,7 @@ Observable.prototype.debug = function(messages: string) {
   return this.do(
   (next) => {
     if (!environment.production) {
-      console.log('messages', next);
+      console.log(messages, next);
     }
   },
   (err) => {

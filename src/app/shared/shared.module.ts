@@ -18,7 +18,9 @@ import {
   MdTooltipModule,
   MdRadioModule,
   MdDatepickerModule,
-  MdNativeDateModule,
+  // MdNativeDateModule,
+  DateAdapter,
+  MD_DATE_FORMATS,
   MdSelectModule,
   MdButtonToggleModule
 } from '@angular/material';
@@ -26,6 +28,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { DirectiveModule } from '../directive/directive.module';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { AgeInputComponent } from './age-input/age-input.component';
+
+import { MY_DATE_FORMATS, MyDateAdapter } from './md-date';
 
 @NgModule({
   imports: [
@@ -38,7 +42,7 @@ import { AgeInputComponent } from './age-input/age-input.component';
     ReactiveFormsModule,
     MdButtonToggleModule,
     MdDatepickerModule,
-    MdNativeDateModule
+    // MdNativeDateModule
   ],
   declarations: [
     ConfirmDialogComponent,
@@ -66,12 +70,16 @@ import { AgeInputComponent } from './age-input/age-input.component';
     MdTooltipModule,
     MdRadioModule,
     MdDatepickerModule,
-    MdNativeDateModule,
+    // MdNativeDateModule,
     MdSelectModule,
     DirectiveModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     AgeInputComponent,
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: MyDateAdapter},
+    {provide: MD_DATE_FORMATS, useValue: MY_DATE_FORMATS}
   ]
 })
 export class SharedModule {

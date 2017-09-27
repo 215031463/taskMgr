@@ -23,6 +23,6 @@
         </md-button-toggle>
       </md-button-toggle-group>
     </div>
-    <md-error *ngIf="form.hasError('ageInvalid', 'age')">年龄或单位不正确</md-error>
+    <md-error *ngIf="form.hasError('ageInvalid', 'age') && form.get('age').dirty">年龄或单位不正确</md-error>
   </ng-container>
 </div>

@@ -18,6 +18,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/take';
 
 import {
   subDays,
@@ -28,10 +29,7 @@ import {
   differenceInYears,
   isBefore,
   parse,
-  format,
-  isDate,
-  isValid,
-  isFuture
+  format
 } from 'date-fns';
 import { dateValidate } from '../../utils/date.utils';
 
@@ -70,7 +68,7 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
   @Input() monthsTop = 24;
   @Input() yearsBottom = 0;
   @Input() yearsTop = 150;
-  @Input() debounceTime = 300;
+  @Input() debounceTime = 500;
   @Input() format = 'YYYY-MM-DD';
   public form: FormGroup;
   public units = [
@@ -97,9 +95,12 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   writeValue(obj: any): void {
     if (obj) {
-      console.log(obj);
-      this.form.get('birthday').patchValue(format(obj, this.format)); // mdDateadapt 格式 bug
+      const date = new Date(obj);
+      const age = this.toAge(date);
+      this.form.get('birthday').patchValue(date);
       // 手动写 年龄值， 此时不会触发 valueChanges
+      this.form.get(['age', 'ageNum']).patchValue(age.age);
+      this.form.get(['age', 'ageUnit']).patchValue(age.unit);
     }
   }
 
@@ -138,7 +139,7 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
       .distinctUntilChanged()
       .filter(_ => birthday.valid);
     const ageNum$ = ageNum.valueChanges
-      .startWith(ageNum.value)
+      // .startWith(ageNum.value)
       .debounceTime(this.debounceTime)
       .distinctUntilChanged();
     const ageUnit$ = ageUnit.valueChanges
@@ -151,10 +152,9 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
         return { age: _n, unit: _u };
       })
       .debounceTime(this.debounceTime)
-      // .do(val => console.log('age$', val))
       .map((age: Age) => {
         const d = this.toDate(age);
-        return { date: d, from: 'age' };
+        return {date: d, from: 'age'};
       })
       .filter(_ => this.form.get('age').valid);
     const merged$ = Observable.merge(birthday$, age$)
@@ -162,7 +162,6 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
 
     this.sub = merged$.subscribe(d => {
       const age = this.toAge(d.date);
-      console.log(d);
       if (d.from === 'birthday') {
         if (age.age !== ageNum.value) {
           ageNum.patchValue(age.age, { eventEmitter: false });
@@ -174,8 +173,7 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
       } else {
         const birthAgeCompare = this.toAge(birthday.value);
         if (birthAgeCompare.age !== age.age || birthAgeCompare.unit !== age.unit) {
-          // console.log(d.date); // dateFormat is not match dateAdapter;
-          birthday.patchValue(d.date, { eventEmitter: false });
+          birthday.patchValue(new Date(d.date), { eventEmitter: false });
         }
       }
     });
@@ -183,6 +181,9 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   private toDate(age: Age): string
   {
+    if (!age.age) {
+      return null;
+    }
     const now = Date.now();
     switch (age.unit) {
       case AgeUnit.Year: {
@@ -228,6 +229,9 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
       const ageNum = g.get(ageNumKey).value;
       const ageUnit = g.get(ageUnitKey).value;
       const now = Date.now();
+      if (ageNum === null) {
+        return {ageInvalid: true};
+      }
       switch (ageUnit) {
         case AgeUnit.Day: {
           return ageNum >= this.daysBottom && ageNum < this.daysTop ? null : { ageInvalid: true };
@@ -239,12 +243,10 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
           return ageNum >= this.yearsBottom &&  ageNum < this.yearsTop ? null : { ageInvalid: true };
         }
         default: {
-          return null;
+          return { ageInvalid: true };
         }
       }
     };
   }
 
 }
-
-

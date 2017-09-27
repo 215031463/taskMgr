@@ -83,7 +83,7 @@ export class RegisterComponent implements OnInit {
         equalValidate('password')
       ])],
       avatar: avatar,
-      dateOfBirth: '1994-10-4'
+      dateOfBirth: '1994-10-04'
     });
 
     // 订阅registerForm的 valueChanges
