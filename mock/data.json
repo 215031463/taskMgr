@@ -1,4 +1,26 @@
 {
+  "projects": [
+    {
+      "id": "1",
+      "name": "项目一",
+      "desc": "项目一的描述内容",
+      "coverImg": "assets/img/covers/3.jpg",
+      "memberIds": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "项目二",
+      "desc": "项目二的描述内容",
+      "coverImg": "./assets/img/covers/1.jpg",
+      "memberIds": [
+        "1"
+      ]
+    }
+  ],
+  "task-lists": [],
   "quotes": [
     {
       "id": 0,

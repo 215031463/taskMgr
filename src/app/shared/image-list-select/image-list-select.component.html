@@ -11,7 +11,7 @@
       <div class="image-container" (click)="onSelect(i)">
         <md-icon *ngIf="useSvgIcon else imgItem" [svgIcon]="item"></md-icon>
         <ng-template #imgItem>
-          <img [src]="item" ngStyle="{ 'width': itemWidth }" alt="image item">
+          <img [src]="item" [ngStyle]="{ 'width': itemWidth }" alt="image item">
         </ng-template>
         <div class="after">
           <div class="zoom">

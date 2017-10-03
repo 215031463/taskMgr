@@ -1,5 +1,11 @@
-import { Component, OnInit, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/take';
+import * as _ from 'lodash';
+
+import { ProjectService } from '../../service/project/project.service';
 
 import { NewProjectComponent } from '../new-project/new-project.component';
 import { InviteComponent } from '../invite/invite.component';
@@ -16,71 +22,58 @@ import { Project } from '@domain/project.model';
   animations: [ routeAnim, listAnim ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectListComponent implements OnInit {
-  public waitingDeleteProjectId: number;
+export class ProjectListComponent implements OnInit, OnDestroy {
+  private sub: Subscription;
   public projects: Array<Project> = [];
 
   @HostBinding('@slideToRight') state;
 
-  constructor(private dialog: MdDialog, private cd: ChangeDetectorRef) { }
+  constructor(
+    private dialog: MdDialog,
+    private cd: ChangeDetectorRef,
+    private ps: ProjectService) { }
 
   ngOnInit() {
-    this.projects = [
-      {
-        id: 1,
-        name: '项目一',
-        desc: '项目一的描述内容',
-        imgURL: './assets/img/covers/0.jpg'
-      },
-      {
-        id: 2,
-        name: '项目二',
-        desc: '项目二的描述内容',
-        imgURL: './assets/img/covers/1.jpg'
-      },
-      /* {
-        id: 3,
-        name: '项目三',
-        desc: '项目三的描述内容',
-        imgURL: './assets/img/covers/3.jpg'
-      },
-      {
-        id: 4,
-        name: '项目四',
-        desc: '项目四的描述内容',
-        imgURL: './assets/img/covers/4.jpg'
-      } */
-    ];
+    this.sub = this.ps.get('1').subscribe(projects => {
+      this.projects = projects;
+      this.cd.markForCheck();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
+  }
+
+  private getThumbnails(): string[]
+  {
+    return _.range(0, 40)
+      .map(num => `assets/img/covers/${num}_tn.jpg`);
+  }
+
+  private buildImgSrc(src: string): string
+  {
+    return src.indexOf('_') !== -1 ? src.split('_')[0] + '.jpg' : src;
   }
 
   public openNewProjectDialog(): void {
+    const img = `assets/img/covers/${Math.floor(Math.random() * 40)}_tn.jpg`;
     const dialogRef: MdDialogRef<NewProjectComponent> = this.dialog.open(NewProjectComponent, {
       data: {
-        title: '新建项目'
+        thumbnails: this.getThumbnails(),
+        coverImg: img
       }
     });
     dialogRef.afterClosed()
-      .subscribe(
-      data => {
-        if (data) {
-          this.projects = [...this.projects,
-          {
-            id: 5,
-            name: '项目五',
-            desc: '项目五的描述内容',
-            imgURL: './assets/img/covers/5.jpg'
-          },
-          {
-            id: 6,
-            name: '项目六',
-            desc: '项目六的描述内容',
-            imgURL: './assets/img/covers/6.jpg'
-          }
-        ];
+      .take(1)
+      .filter(n => n)
+      .map(p => ({...p, coverImg: this.buildImgSrc(p.coverImg)}))
+      .switchMap(project => this.ps.add(project))
+      .subscribe(project => {
+        this.projects.push(project);
         this.cd.markForCheck();
-        }
-      }
-      );
+      });
   }
 
   public invite(id?: number): void
@@ -101,17 +94,29 @@ export class ProjectListComponent implements OnInit {
 
   public editRequestHandler(project): void
   {
-    this.dialog.open(NewProjectComponent, {
+    const img = project.coverImg.indexOf('_tn') === -1 ? project.coverImg.split('\.jpg')[0] + '_tn.jpg' : project.coverImg;
+    const dialogRef = this.dialog.open(NewProjectComponent, {
       data: {
-        title: '修改',
-        project: project
+        thumbnails: this.getThumbnails(),
+        project: project,
+        coverImg: img
       }
     });
+
+    dialogRef.afterClosed()
+      .take(1)
+      .filter(p => p)
+      .map(p => ({...project, name: p.name, desc: p.desc, coverImg: this.buildImgSrc(p.coverImg)}))
+      .switchMap(p => this.ps.update(p))
+      .subscribe((p: Project) => {
+        const index = this.projects.map(p => p.id).indexOf(project.id);
+        this.projects.splice(index, 1, p);
+        this.cd.markForCheck();
+      })
   }
 
   public deleteRequestHandler(project): void
   {
-    this.waitingDeleteProjectId = project.id;
     const dialogRef: MdDialogRef<ConfirmDialogComponent> = this.dialog.open(ConfirmDialogComponent, {
       position: {
         top: '30px'
@@ -123,18 +128,18 @@ export class ProjectListComponent implements OnInit {
     });
 
     dialogRef.afterClosed()
-      .subscribe(
-      data => {
-        if (data) {
-          this.projects.forEach((project, index, projects) => {
-            if (project.id === this.waitingDeleteProjectId) {
-              projects.splice(index, 1);
-            }
-          });
-        }
-        this.cd.markForCheck();
-      }
-      );
+      .take(1)
+      .filter(result => result)
+      .switchMap(() => this.ps.delete(project))
+      .subscribe(() => {
+        const index = this.projects.map(p => p.id).indexOf(project.id);
+        this.projects.splice(index, 1);
+      });
+  }
+
+  public trackById(index: number, project: Project): string
+  {
+    return project.id;
   }
 
 }

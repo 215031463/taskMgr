@@ -1,6 +1,8 @@
 export interface Project {
-  id?: number;
+  id?: string;
   name: string;
-  desc: string;
-  imgURL: string;
+  desc?: string;
+  coverImg: string;
+  taskListIds?: string[]; // 任务列表id
+  memberIds?: string[]; // 成员id
 }

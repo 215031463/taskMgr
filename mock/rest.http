@@ -1,0 +1,36 @@
+GET http://localhost:3000/projects?memberIds_like=1
+
+###
+GET http://localhost:3000/task-lists
+
+###
+POST http://localhost:3000/task-lists
+Content-Type: application/json
+
+{
+  "name": "进行中",
+  "order": 0,
+  "projectId": "1"
+}
+
+###
+PUT http://localhost:3000/task-lists/1
+Content-Type: application/json
+
+{
+  "name": "已完成",
+  "order": 3,
+  "projectId": "1"
+}
+
+###
+PATCH http://localhost:3000/task-lists/1
+Content-Type: application/json
+
+{
+  "name": "进行中"
+}
+
+
+###
+DELETE http://localhost:3000/task-lists/1

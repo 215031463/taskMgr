@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProjectRoutingModule } from './project-routing.module';
 
@@ -9,6 +10,7 @@ import { InviteComponent } from './invite/invite.component';
 
 @NgModule({
   imports: [
+    ReactiveFormsModule,
     SharedModule,
     ProjectRoutingModule
   ],

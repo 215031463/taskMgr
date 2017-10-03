@@ -12,7 +12,7 @@ import { Project } from '@domain/project.model';
 })
 export class ProjectItemComponent implements OnInit {
   @Input() project: Project;
-  @Output() inviteRequest: EventEmitter<number> = new EventEmitter<number>();
+  @Output() inviteRequest: EventEmitter<string> = new EventEmitter<string>();
   @Output() editRequest: EventEmitter<void> = new EventEmitter<void>();
   @Output() deleteRequest: EventEmitter<void> = new EventEmitter<void>();
 

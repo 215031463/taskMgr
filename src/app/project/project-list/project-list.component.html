@@ -4,7 +4,7 @@
   (inviteRequest)="invite($event)"
   (editRequest)="editRequestHandler(project)"
   (deleteRequest)="deleteRequestHandler(project)"
-  *ngFor="let project of projects"
+  *ngFor="let project of projects; trackBy: trackById"
   class="card"></app-project-item>
 </div>
 
