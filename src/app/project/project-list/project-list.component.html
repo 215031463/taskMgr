@@ -1,7 +1,7 @@
 <div class="container" [@list]="projects.length">
   <app-project-item
   [project]="project"
-  (inviteRequest)="invite($event)"
+  (inviteRequest)="invite(project)"
   (editRequest)="editRequestHandler(project)"
   (deleteRequest)="deleteRequestHandler(project)"
   *ngFor="let project of projects; trackBy: trackById"

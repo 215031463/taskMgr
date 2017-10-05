@@ -22,18 +22,24 @@ import {
   DateAdapter,
   MD_DATE_FORMATS,
   MdSelectModule,
-  MdButtonToggleModule
+  MdChipsModule,
+  MdButtonToggleModule,
+  MdTabsModule,
 } from '@angular/material';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { DirectiveModule } from '../directive/directive.module';
 import { ImageListSelectComponent } from './image-list-select/image-list-select.component';
 import { AgeInputComponent } from './age-input/age-input.component';
+import { ChipsListComponent } from './chips-list/chips-list.component';
 
 import { MY_DATE_FORMATS, MyDateAdapter } from './md-date';
+import { IdentityInputComponent } from './identity-input/identity-input.component';
+import { AreaListComponent } from './area-list/area-list.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     MdButtonModule,
     MdDialogModule,
     MdGridListModule,
@@ -42,12 +48,18 @@ import { MY_DATE_FORMATS, MyDateAdapter } from './md-date';
     ReactiveFormsModule,
     MdButtonToggleModule,
     MdDatepickerModule,
+    MdSelectModule,
+    MdChipsModule,
+    MdAutocompleteModule
     // MdNativeDateModule
   ],
   declarations: [
     ConfirmDialogComponent,
     ImageListSelectComponent,
     AgeInputComponent,
+    ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent,
   ],
   entryComponents: [
     ConfirmDialogComponent
@@ -72,10 +84,15 @@ import { MY_DATE_FORMATS, MyDateAdapter } from './md-date';
     MdDatepickerModule,
     // MdNativeDateModule,
     MdSelectModule,
+    MdChipsModule,
+    MdTabsModule,
     DirectiveModule,
     ConfirmDialogComponent,
     ImageListSelectComponent,
     AgeInputComponent,
+    ChipsListComponent,
+    IdentityInputComponent,
+    AreaListComponent,
   ],
   providers: [
     {provide: DateAdapter, useClass: MyDateAdapter},

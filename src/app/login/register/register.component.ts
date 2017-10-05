@@ -1,5 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
+
+import { extraInfo, getAddr, getBirth, IdentityInfo, isValidAddrCode } from '../../utils/identity.utils';
+import { dateValidate } from '../../utils/date.utils';
+import { Address, Identity, IdentityType } from '../../domain';
 import { equalValidate } from '../../validators/equal.validator';
 
 @Component({
@@ -7,7 +15,9 @@ import { equalValidate } from '../../validators/equal.validator';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+  private formSub: Subscription;
+  private identitySub: Subscription;
   public items: Array<string>;
   public registerForm: FormGroup;
 
@@ -62,6 +72,15 @@ export class RegisterComponent implements OnInit {
     this.buildForm();
   }
 
+  ngOnDestroy() {
+    if (this.formSub) {
+      this.formSub.unsubscribe();
+    }
+    if (this.identitySub) {
+      this.identitySub.unsubscribe();
+    }
+  }
+
   private buildForm(): void
   {
     // 随机头像处理
@@ -83,13 +102,43 @@ export class RegisterComponent implements OnInit {
         equalValidate('password')
       ])],
       avatar: avatar,
-      dateOfBirth: '1994-10-04'
+      dateOfBirth: [],
+      identity: [],
+      address: []
     });
 
     // 订阅registerForm的 valueChanges
-    this.registerForm.valueChanges.subscribe(() => {
+    this.formSub = this.registerForm.valueChanges.subscribe(() => {
       this.onValueChanges();
     });
+
+    // 个人信息  输入身份证 联动 出生日期年龄控件 和 地址控件
+    const identity = this.registerForm.get('identity');
+    const identity$ =
+    identity.valueChanges
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .filter(_ => identity.valid);
+
+    this.identitySub = identity$
+      .subscribe((i: Identity) => {
+        if (i.identityType !== IdentityType.IdCard) {
+          return;
+        }
+
+        const identityInfo: IdentityInfo = extraInfo(i.identityNo);
+        const addrCode: string = identityInfo ? identityInfo.addrCode : '';
+        const birthCode: string = identityInfo ? identityInfo.birthCode : '';
+        const birthVal: string = getBirth(birthCode);
+
+        if (isValidAddrCode(addrCode)) {
+          const addrVal: Address = getAddr(addrCode);
+          this.registerForm.get('address').patchValue(addrVal, {eventEmitter: false});
+        }
+        if (dateValidate(new Date(birthVal))) {
+          this.registerForm.get('dateOfBirth').patchValue(new Date(birthVal), {eventEmitter: false});
+        }
+      });
   }
 
   public onValueChanges(): void

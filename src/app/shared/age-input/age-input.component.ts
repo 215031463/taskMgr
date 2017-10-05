@@ -139,7 +139,6 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
       .distinctUntilChanged()
       .filter(_ => birthday.valid);
     const ageNum$ = ageNum.valueChanges
-      // .startWith(ageNum.value)
       .debounceTime(this.debounceTime)
       .distinctUntilChanged();
     const ageUnit$ = ageUnit.valueChanges
@@ -157,8 +156,8 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
         return {date: d, from: 'age'};
       })
       .filter(_ => this.form.get('age').valid);
-    const merged$ = Observable.merge(birthday$, age$)
-      .filter(_ => this.form.valid);
+    const merged$ = Observable.merge(birthday$, age$);
+      // .filter(_ => this.form.valid);
 
     this.sub = merged$.subscribe(d => {
       const age = this.toAge(d.date);
@@ -169,11 +168,12 @@ export class AgeInputComponent implements OnInit, OnDestroy, ControlValueAccesso
         if (age.unit !== ageUnit.value) {
           ageUnit.patchValue(age.unit, { eventEmitter: false });
         }
-        this.propagateChange(d);
+        this.propagateChange(d.date);
       } else {
         const birthAgeCompare = this.toAge(birthday.value);
         if (birthAgeCompare.age !== age.age || birthAgeCompare.unit !== age.unit) {
           birthday.patchValue(new Date(d.date), { eventEmitter: false });
+          this.propagateChange(d.date);
         }
       }
     });

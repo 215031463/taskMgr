@@ -63,4 +63,15 @@ export class ProjectService {
       .mapTo(project);
   }
 
+  public addMemberIds(project: Project, memberIds: string[]): Observable<Project>
+  {
+    const url = `${this.url}/${this.domain}/${project.id}`;
+    const ids = project.memberIds;
+    return Observable.from(memberIds)
+      .filter(id => ids.indexOf(id) === -1)
+      .reduce((acc, curr) => [...acc, curr], ids)
+      .switchMap((val) => this.http.patch(url, JSON.stringify({memberIds: val}), {headers: this.headers}))
+      .map((res: Response) => res.json());
+  }
+
 }

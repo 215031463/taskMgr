@@ -1,0 +1,13 @@
+<div>
+  <md-select placeholder="证件类型" [(ngModel)]="identity.identityType" (change)="onIdTypeChange($event.value)">
+    <md-option [value]="type.value" *ngFor="let type of identityTypes">
+      {{ type.label }}
+    </md-option>
+  </md-select>
+</div>
+<div class="id-input">
+  <md-form-field class="full-width">
+    <input type="text" placeholder="证件号码" [(ngModel)]="identity.identityNo" mdInput (change)="onIdNoChange($event.target.value)">
+    <md-error>证件号码输入有误</md-error>
+  </md-form-field>
+</div>

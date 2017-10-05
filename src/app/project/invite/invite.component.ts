@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
 
+import { User } from '../../domain';
+
 @Component({
   selector: 'app-invite',
   templateUrl: './invite.component.html',
@@ -8,22 +10,7 @@ import { MD_DIALOG_DATA, MdDialogRef } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InviteComponent implements OnInit {
-  public memembers = [
-    {
-      id: 1000,
-      name: 'Jerry'
-    },
-    {
-      id: 1001,
-      name: 'Army'
-    },
-    {
-      id: 1003,
-      name: '张帆'
-    }
-  ];
-
-  public selectedMemember: { id: number; name: string; };
+  public members: User[] = [];
 
   constructor(
     @Inject(MD_DIALOG_DATA) private dialogData,
@@ -32,21 +19,17 @@ export class InviteComponent implements OnInit {
 
   ngOnInit() {
     // console.log(JSON.stringify(this.dialogData));
+    this.members = [...this.dialogData.members];
   }
 
-  public displayUser(user: { id: number; name: string; }): string
+  public onSubmit(ev: Event, valid: boolean): void
   {
-    return user.name ? user.name : '';
-  }
+    ev.preventDefault();
+    if (!valid) {
+      return;
+    }
 
-  public saveClick(): void
-  {
-    this.dialogRef.close({ selectedMemember: this.selectedMemember });
-  }
-
-  public select(id: number | string): void
-  {
-    this.selectedMemember = this.memembers.find(memember => memember.id === +id);
+    this.dialogRef.close(this.members);
   }
 
 }

@@ -1,11 +1,15 @@
 import { Component, OnInit, OnDestroy, HostBinding, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MdDialog, MdDialogRef } from '@angular/material';
+import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
 import * as _ from 'lodash';
 
 import { ProjectService } from '../../service/project/project.service';
+import { UserService } from '../../service/user/user.service';
 
 import { NewProjectComponent } from '../new-project/new-project.component';
 import { InviteComponent } from '../invite/invite.component';
@@ -13,7 +17,7 @@ import { ConfirmDialogComponent } from './../../shared/confirm-dialog/confirm-di
 
 import { routeAnim } from '@animations/route.animations';
 import { listAnim } from '@animations/list.animations';
-import { Project } from '@domain/project.model';
+import { Project, User } from '../../domain';
 
 @Component({
   selector: 'app-project-list',
@@ -30,8 +34,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MdDialog,
-    private cd: ChangeDetectorRef,
-    private ps: ProjectService) { }
+    private us: UserService,
+    private ps: ProjectService,
+    private cd: ChangeDetectorRef) { }
+
 
   ngOnInit() {
     this.sub = this.ps.get('1').subscribe(projects => {
@@ -76,20 +82,24 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public invite(id?: number): void
+  public invite(p: Project): void
   {
     const dialogRef: MdDialogRef<InviteComponent> = this.dialog.open(InviteComponent, {
       data: {
-        darkTheme: true,
-        id: id
+        members: []
       }
     });
     dialogRef.afterClosed()
-      .subscribe(
-      data => {
-        // console.log(JSON.stringify(data));
-      }
-      );
+      .take(1)
+      .filter(val => val)
+      .map((users: User[]) => users.map(user => user.id))
+      .switchMap((ids: string[]) => this.ps.addMemberIds(p, ids))
+      .do((project: Project) => {
+        const idx = this.projects.map(projectItem => projectItem.id).indexOf(project.id);
+        this.projects.splice(idx, 1, project);
+      })
+      .switchMap((project: Project) => this.us.batchUpdateProejctRef(project))
+      .subscribe((users: User[]) => {});
   }
 
   public editRequestHandler(project): void

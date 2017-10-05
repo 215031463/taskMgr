@@ -18,7 +18,7 @@ export class UserService {
 
   constructor(private http: Http, @Inject('APP_CONFIG') private config) { }
 
-  public searchUsers(keywords: string): Observable<User>
+  public searchUsers(keywords: string): Observable<User[]>
   {
     const url = `${this.url}/${this.domain}`;
     let params = new URLSearchParams();

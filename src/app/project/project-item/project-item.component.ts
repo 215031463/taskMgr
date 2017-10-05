@@ -33,7 +33,7 @@ export class ProjectItemComponent implements OnInit {
 
   public inviteClick(): void
   {
-    this.inviteRequest.emit(this.project.id);
+    this.inviteRequest.emit();
   }
 
   public onEditBtnClick(): void

@@ -9,4 +9,9 @@ md-icon.avatar {
 md-card {
   margin: 20px auto;
   width: 600px;
+
+  .md-card-actions {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

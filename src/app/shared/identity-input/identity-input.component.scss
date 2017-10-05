@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+
+  .id-input {
+    flex: 1;
+  }
+}
